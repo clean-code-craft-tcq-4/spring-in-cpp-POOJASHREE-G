@@ -22,15 +22,15 @@ TEST_CASE("reports average, minimum and maximum") {
     //Use http://www.cplusplus.com/reference/cmath/isnan/
 //}
 
-//TEST_CASE("raises alerts when max is greater than threshold") {
-    //EmailAlert emailAlert;
-    //LEDAlert ledAlert;
-    //std::vector<IAlerter*> alerters = {&emailAlert, &ledAlert};
+TEST_CASE("raises alerts when max is greater than threshold") {
+    EmailAlert emailAlert;
+    LEDAlert ledAlert;
+    std::vector<IAlerter*> alerters = {&emailAlert, &ledAlert};
     
-    //const float maxThreshold = 10.2;
-    //StatsAlerter statsAlerter(maxThreshold, alerters);
-    //statsAlerter.checkAndAlert({99.8, 34.2, 4.5, 6.7});
+    const float maxThreshold = 10.2;
+    StatsAlerter statsAlerter(maxThreshold, alerters);
+    statsAlerter.checkAndAlert({99.8, 34.2, 4.5, 6.7});
 
-    //REQUIRE(emailAlert.emailSent);
-    //REQUIRE(ledAlert.ledGlows);
-//}
+    REQUIRE(emailAlert.emailSent);
+    REQUIRE(ledAlert.ledGlows);
+}

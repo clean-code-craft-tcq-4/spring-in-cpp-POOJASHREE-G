@@ -20,7 +20,7 @@ TEST_CASE("average is NaN for empty array") {
     
     //Design the REQUIRE statement here.
     //Use http://www.cplusplus.com/reference/cmath/isnan/
-    REQUIRE(computedStats.average == NAN);
+    REQUIRE(computedStats.average == NaN);
 }
 
 TEST_CASE("raises alerts when max is greater than threshold") {

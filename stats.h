@@ -10,69 +10,70 @@ namespace Statistics {
         float min;
     };
     
-    Stats ComputeStatistics(const std::vector<float>& );
-    
-    class IAlerter
+    Stats ComputeStatistics(const std::vector<float>& );    
+}
+
+
+class IAlerter
+{
+public:
+	virtual void Update() = 0; 
+};
+
+class EmailAlert : public IAlerter
+{
+public:
+	bool emailSent;
+
+	EmailAlert()
+		 : emailSent(false) { }
+
+	void Update()
 	{
-	public:
-		virtual void Update() = 0; 
-	};
+		emailSent = true;
+	}
 
-	class EmailAlert : public IAlerter
+};
+
+class LEDAlert : public IAlerter
+{
+public:
+	bool ledGlows;
+
+	LEDAlert()
+		: ledGlows(false) { }
+
+
+	void Update()
 	{
-	public:
-		bool emailSent;
+		ledGlows = true;
+	}
 
-		EmailAlert()
-			 : emailSent(false) { };
+};
 
-		void Update()
-		{
-			emailSent = true;
-		}
+class StatsAlerter
+{
+public:
 
-	};
+	std::vector<IAlerter*> Alrts;
 
-	class LEDAlert : public IAlerter
-	{
-	public:
-		bool ledGlows;
-
-		LEDAlert()
-			: ledGlows(false) { };
-
-
-		void Update()
-		{
-			ledGlows = true;
-		}
-
-	};
-
-	class StatsAlerter
-	{
-	public:
-
-		std::vector<IAlerter*> Alrts;
-    
         float maxthres;
 
-		StatsAlerter(const float maxthresold, std::vector<IAlerter*> alerts)
-		{
-			maxthres = maxthresold;
-			Alrts = alerts;
-		}
+	StatsAlerter(const float maxthresold, std::vector<IAlerter*> alerts)
+	{
+		maxthres = maxthresold;
+		Alrts = alerts;
+	}
 
-		void checkAndAlert(const std::vector<float>& vect)
+	void checkAndAlert(const std::vector<float>& vect)
+	{
+		auto ComputedStats = Statistics::ComputeStatistics(vect);
+		if ( ComputedStats.max > maxthres )
 		{
-			auto ComputedStats = Statistics::ComputeStatistics(vect);
-			if ( ComputedStats.max > maxthres )
+			for (int i = 0; i < Alrts.size(); ++i)
 			{
-				for (int i = 0; i < Alrts.size(); ++i)
-				{
-					Alrts[i]->Update();
-				}
+				Alrts[i]->Update();
 			}
-		};
+		}
 	};
-}
+};

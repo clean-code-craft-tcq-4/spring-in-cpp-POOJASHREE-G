@@ -1,4 +1,5 @@
 #include <vector>
+#include <limits>
 
 namespace Statistics {
     
@@ -11,9 +12,9 @@ namespace Statistics {
 	    
 	Stats()
 	{
-		average = NAN;
-		max = NAN;
-		min = NAN;
+		average = std::numeric_limits<float>::quiet_NaN();
+		max = std::numeric_limits<float>::quiet_NaN();
+		min = std::numeric_limits<float>::quiet_NaN();
 	}
     };
     

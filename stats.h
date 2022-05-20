@@ -8,6 +8,13 @@ namespace Statistics {
         float average;
         float max;
         float min;
+	    
+	Stats()
+	{
+		average = NAN;
+		max = NAN;
+		min = NAN;
+	}
     };
     
     Stats ComputeStatistics(const std::vector<float>& );    
